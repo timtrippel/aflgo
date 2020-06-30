@@ -4870,15 +4870,18 @@ static u32 calculate_score(struct queue_entry* q) {
   if (perf_score > HAVOC_MAX_MULT * 100) perf_score = HAVOC_MAX_MULT * 100;
 
   /* AFLGO-DEBUGGING */
-  fprintf(stderr, "[Time %llu], q->fname: %s, q->distance: %4lf, ", \
-    t, strrchr(q->fname, '/') + 1, q->distance);
-  fprintf(stderr, "max_distance: %4lf min_distance: %4lf, T: %4.3lf, ", \
-    max_distance, min_distance, T);
-  fprintf(stderr, "power_factor: %4.3lf, adjusted perf_score: %4d\n", \
-    power_factor, perf_score);
+  /*fprintf(stderr, "[Time %llu], q->fname: %s, q->distance: %4lf, ", \*/
+    /*t, strrchr(q->fname, '/') + 1, q->distance);*/
+  /*fprintf(stderr, "max_distance: %4lf min_distance: %4lf, T: %4.3lf, ", \*/
+    /*max_distance, min_distance, T);*/
+  /*fprintf(stderr, "power_factor: %4.3lf, adjusted perf_score: %4d\n", \*/
+    /*power_factor, perf_score);*/
+
+  /* HW-Fuzzing Debugging */
+  fprintf(stderr, "%llu, %4lf, %4lf, %4lf\n", \
+    t, q->distance, max_distance, min_distance);
 
   return perf_score;
-
 }
 
 
@@ -8163,6 +8166,9 @@ int main(int argc, char** argv) {
   detect_file_args(argv + optind + 1);
 
   if (!out_file) setup_stdio_file();
+
+  /*HW-Fuzzing Debugging header*/
+  fprintf(stderr, "Time, Distance, Max. Distance, Min. Distance\n");
 
   check_binary(argv[optind]);
 
