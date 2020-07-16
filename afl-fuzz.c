@@ -834,6 +834,13 @@ static void add_to_queue(u8* fname, u32 len, u8 passed_det) {
 
   last_path_time = get_cur_time();
 
+  /* HW-Fuzzing Debugging */
+  u64 cur_ms = get_cur_time();
+  u64 t = (cur_ms - start_time) / 1000;
+  double progress_to_tx = ((double) t) / ((double) t_x * 60.0);
+  fprintf(stderr, "%llu, %s, %4lf, %4lf\n", \
+          t, q->fname, q->distance, progress_to_tx);
+
 }
 
 
@@ -4878,8 +4885,8 @@ static u32 calculate_score(struct queue_entry* q) {
     /*power_factor, perf_score);*/
 
   /* HW-Fuzzing Debugging */
-  fprintf(stderr, "%llu, %4lf, %4lf, %4lf\n", \
-    t, q->distance, max_distance, min_distance);
+  fprintf(stderr, "%llu, %s, %4lf, %4lf\n", \
+          t, q->fname, q->distance, progress_to_tx);
 
   return perf_score;
 }
@@ -8168,7 +8175,7 @@ int main(int argc, char** argv) {
   if (!out_file) setup_stdio_file();
 
   /*HW-Fuzzing Debugging header*/
-  fprintf(stderr, "Time, Distance, Max. Distance, Min. Distance\n");
+  fprintf(stderr, "Time, Filename, Distance, %% Exploitation Time\n");
 
   check_binary(argv[optind]);
 
