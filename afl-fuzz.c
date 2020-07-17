@@ -4860,6 +4860,16 @@ static u32 calculate_score(struct queue_entry* q) {
 
     }// else WARNF ("Normalized distance negative: %f", normalized_d);
 
+      /* HW-Fuzzing Debugging */
+      fprintf(stderr, "%llu, %4lf, %4lf, %4lf, %4lf, %4lf, %s\n", \
+          t, progress_to_tx, T, q->distance, \
+          normalized_d, power_factor, q->fname);
+  }
+
+  else {
+    fprintf(stderr, "%llu, %4lf, %4lf, %4lf, %4lf, %4lf, %s\n", \
+      t, progress_to_tx, T, q->distance, \
+      -1.0, power_factor, q->fname);
   }
 
   perf_score *= power_factor;
@@ -4876,10 +4886,6 @@ static u32 calculate_score(struct queue_entry* q) {
   /*fprintf(stderr, "power_factor: %4.3lf, adjusted perf_score: %4d\n", \*/
     /*power_factor, perf_score);*/
 
-  /* HW-Fuzzing Debugging */
-  fprintf(stderr, "%llu, %4lf, %4lf, %4lf, %4lf, %4lf, %s\n", \
-          t, progress_to_tx, T, q->distance, \
-          normalized_d, power_factor, q->fname);
 
   return perf_score;
 }
